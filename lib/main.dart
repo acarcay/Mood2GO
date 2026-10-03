@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 
@@ -22,10 +24,16 @@ final GoRouter router = GoRouter(
   ],
 );
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://ntwnrorwpgsocgqwtklu.supabase.co',
+    publishableKey: 'sb_publishable_QJTC6mOWiZF-L_pfi88VTw_KqIH4Uhy',
+  );
+
   runApp(const ModunaGoreApp());
 }
-
 class ModunaGoreApp extends StatelessWidget {
   const ModunaGoreApp({super.key});
 
