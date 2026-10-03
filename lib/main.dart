@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 import 'pages/home_page.dart';
+import 'widgets/mood2go_wordmark.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -27,17 +28,17 @@ Future<void> main() async {
     publishableKey: 'sb_publishable_QJTC6mOWiZF-L_pfi88VTw_KqIH4Uhy',
   );
 
-  runApp(const ModunaGoreApp());
+  runApp(const Mood2GoApp());
 }
 
-class ModunaGoreApp extends StatelessWidget {
-  const ModunaGoreApp({super.key});
+class Mood2GoApp extends StatelessWidget {
+  const Mood2GoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Moduna Göre',
+      title: 'Mood2GO',
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFFAFCFA),
@@ -76,7 +77,7 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 40),
 
               const Text(
-                'Moduna göre\nbir şeyler bul.',
+                'Find something\nthat fits your mood.',
                 style: TextStyle(
                   color: darkGreen,
                   fontSize: 38,
@@ -89,7 +90,7 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 16),
 
               const Text(
-                'Ne yapmak istediğini seç. Sana ve arkadaşlarına uygun mekanları keşfet.',
+                'Choose what you feel like doing and discover places that suit you and your friends.',
                 style: TextStyle(
                   color: Color(0xFF718078),
                   fontSize: 16,
@@ -115,7 +116,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Başlayalım',
+                    'Get started',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -131,7 +132,7 @@ class WelcomePage extends StatelessWidget {
                     context.go('/login');
                   },
                   child: const Text(
-                    'Hesabım var, giriş yap',
+                    'I already have an account',
                     style: TextStyle(
                       color: darkGreen,
                       fontSize: 15,
@@ -165,15 +166,7 @@ class _AppLogo extends StatelessWidget {
           ),
         ),
         SizedBox(width: 11),
-        Text(
-          'moduna göre',
-          style: TextStyle(
-            color: WelcomePage.darkGreen,
-            fontSize: 19,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -0.4,
-          ),
-        ),
+        Mood2GoWordmark(),
       ],
     );
   }

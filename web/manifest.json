@@ -1,6 +1,6 @@
 {
-    "name": "mood2go",
-    "short_name": "mood2go",
+    "name": "Mood2GO",
+    "short_name": "Mood2GO",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

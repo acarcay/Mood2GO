@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     final password = passwordController.text;
 
     if (email.isEmpty || password.isEmpty) {
-      showMessage('E-posta ve şifre alanlarını doldur.');
+      showMessage('Enter your email and password.');
       return;
     }
 
@@ -53,12 +53,14 @@ class _LoginPageState extends State<LoginPage> {
       final invalidLogin = error.message.toLowerCase().contains(
         'invalid login',
       );
-      showMessage(invalidLogin ? 'E-posta veya şifre hatalı.' : error.message);
+      showMessage(
+        invalidLogin ? 'Incorrect email or password.' : error.message,
+      );
     } catch (error) {
       if (mounted) {
-        showMessage('Bir hata oluştu. İnternet bağlantını kontrol et.');
+        showMessage('Something went wrong. Check your internet connection.');
       }
-      debugPrint('Giriş hatası: $error');
+      debugPrint('Sign-in error: $error');
     } finally {
       if (mounted) setState(() => isLoading = false);
     }
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 48),
               const Text(
-                'Tekrar hoş geldin',
+                'Welcome back',
                 style: TextStyle(
                   color: darkGreen,
                   fontSize: 32,
@@ -93,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Kaldığın yerden devam etmek için hesabına giriş yap.',
+                'Sign in to continue where you left off.',
                 style: TextStyle(
                   color: Color(0xFF718078),
                   fontSize: 16,
@@ -101,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 36),
-              const _FieldLabel('E-posta'),
+              const _FieldLabel('Email'),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -112,13 +114,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              const _FieldLabel('Şifre'),
+              const _FieldLabel('Password'),
               TextField(
                 controller: passwordController,
                 obscureText: isPasswordHidden,
                 onSubmitted: (_) => login(),
                 decoration: _inputDecoration(
-                  hintText: 'Şifreni gir',
+                  hintText: 'Enter your password',
                   icon: Icons.lock_outline_rounded,
                   suffixIcon: IconButton(
                     onPressed: () =>
@@ -134,11 +136,10 @@ class _LoginPageState extends State<LoginPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () => showMessage(
-                    'Şifre yenileme özelliğini daha sonra ekleyeceğiz.',
-                  ),
+                  onPressed: () =>
+                      showMessage('Password reset will be available soon.'),
                   child: const Text(
-                    'Şifremi unuttum',
+                    'Forgot password?',
                     style: TextStyle(
                       color: darkGreen,
                       fontWeight: FontWeight.w600,
@@ -170,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         )
                       : const Text(
-                          'Giriş yap',
+                          'Sign in',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -183,13 +184,13 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Henüz hesabın yok mu?',
+                    'Don’t have an account?',
                     style: TextStyle(color: Color(0xFF718078)),
                   ),
                   TextButton(
                     onPressed: () => context.go('/register'),
                     child: const Text(
-                      'Kayıt ol',
+                      'Sign up',
                       style: TextStyle(
                         color: darkGreen,
                         fontWeight: FontWeight.w700,

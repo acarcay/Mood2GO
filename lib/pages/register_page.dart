@@ -44,19 +44,19 @@ class _RegisterPageState extends State<RegisterPage> {
     final passwordAgain = passwordAgainController.text;
 
     if ([name, email, password, passwordAgain].any((value) => value.isEmpty)) {
-      showMessage('Lütfen bütün alanları doldur.');
+      showMessage('Please complete all fields.');
       return;
     }
     if (!email.contains('@') || !email.contains('.')) {
-      showMessage('Geçerli bir e-posta adresi gir.');
+      showMessage('Enter a valid email address.');
       return;
     }
     if (password.length < 6) {
-      showMessage('Şifre en az 6 karakter olmalı.');
+      showMessage('Password must be at least 6 characters.');
       return;
     }
     if (password != passwordAgain) {
-      showMessage('Girdiğin şifreler aynı değil.');
+      showMessage('Passwords do not match.');
       return;
     }
 
@@ -71,27 +71,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (!mounted) return;
       if (response.user == null) {
-        showMessage('Hesap oluşturulamadı. Tekrar deneyin.');
+        showMessage('Could not create your account. Try again.');
         return;
       }
 
       await Supabase.instance.client.auth.signOut();
       if (!mounted) return;
       context.go('/login');
-      showMessage('Hesabın oluşturuldu. Şimdi giriş yapabilirsin.');
+      showMessage('Account created. You can now sign in.');
     } on AuthException catch (error) {
       if (!mounted) return;
       final alreadyRegistered = error.message.toLowerCase().contains(
         'already registered',
       );
       showMessage(
-        alreadyRegistered ? 'Bu e-posta adresi zaten kayıtlı.' : error.message,
+        alreadyRegistered
+            ? 'This email address is already registered.'
+            : error.message,
       );
     } catch (error) {
       if (mounted) {
-        showMessage('Bir hata oluştu. İnternet bağlantını kontrol et.');
+        showMessage('Something went wrong. Check your internet connection.');
       }
-      debugPrint('Kayıt hatası: $error');
+      debugPrint('Sign-up error: $error');
     } finally {
       if (mounted) setState(() => isLoading = false);
     }
@@ -116,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 36),
               const Text(
-                'Hesabını oluştur',
+                'Create your account',
                 style: TextStyle(
                   color: darkGreen,
                   fontSize: 32,
@@ -126,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Sana uygun öneriler hazırlayabilmemiz için hesabını oluştur.',
+                'Create an account so we can personalize your recommendations.',
                 style: TextStyle(
                   color: Color(0xFF718078),
                   fontSize: 16,
@@ -134,18 +136,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 32),
-              const _FieldLabel('Ad ve soyad'),
+              const _FieldLabel('Full name'),
               TextField(
                 controller: nameController,
                 textInputAction: TextInputAction.next,
                 textCapitalization: TextCapitalization.words,
                 decoration: _inputDecoration(
-                  hintText: 'Adını ve soyadını gir',
+                  hintText: 'Enter your full name',
                   icon: Icons.person_outline_rounded,
                 ),
               ),
               const SizedBox(height: 18),
-              const _FieldLabel('E-posta'),
+              const _FieldLabel('Email'),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -156,13 +158,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 18),
-              const _FieldLabel('Şifre'),
+              const _FieldLabel('Password'),
               TextField(
                 controller: passwordController,
                 obscureText: isPasswordHidden,
                 textInputAction: TextInputAction.next,
                 decoration: _inputDecoration(
-                  hintText: 'En az 6 karakter',
+                  hintText: 'At least 6 characters',
                   icon: Icons.lock_outline_rounded,
                   suffixIcon: IconButton(
                     onPressed: () =>
@@ -176,13 +178,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 18),
-              const _FieldLabel('Şifre tekrar'),
+              const _FieldLabel('Confirm password'),
               TextField(
                 controller: passwordAgainController,
                 obscureText: isPasswordAgainHidden,
                 onSubmitted: (_) => register(),
                 decoration: _inputDecoration(
-                  hintText: 'Şifreni tekrar gir',
+                  hintText: 'Enter your password again',
                   icon: Icons.lock_outline_rounded,
                   suffixIcon: IconButton(
                     onPressed: () => setState(
@@ -220,7 +222,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         )
                       : const Text(
-                          'Hesap oluştur',
+                          'Create account',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -233,13 +235,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Zaten hesabın var mı?',
+                    'Already have an account?',
                     style: TextStyle(color: Color(0xFF718078)),
                   ),
                   TextButton(
                     onPressed: () => context.go('/login'),
                     child: const Text(
-                      'Giriş yap',
+                      'Sign in',
                       style: TextStyle(
                         color: darkGreen,
                         fontWeight: FontWeight.w700,

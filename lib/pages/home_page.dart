@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../widgets/mood2go_wordmark.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -16,20 +18,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Supabase.instance.client.auth.currentUser;
-    final name = user?.userMetadata?['full_name'] as String? ?? 'Kullanıcı';
+    final name = user?.userMetadata?['full_name'] as String? ?? 'User';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'moduna göre',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
+        title: const Mood2GoWordmark(fontSize: 20),
         foregroundColor: darkGreen,
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
             onPressed: () => logout(context),
-            tooltip: 'Çıkış yap',
+            tooltip: 'Sign out',
             icon: const Icon(Icons.logout_rounded),
           ),
         ],
@@ -41,7 +40,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Merhaba, $name',
+                'Hello, $name',
                 style: const TextStyle(
                   color: darkGreen,
                   fontSize: 30,
@@ -71,7 +70,7 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Sana uygun önerileri hazırlayalım.',
+                      'Let’s find recommendations for you.',
                       style: TextStyle(
                         color: darkGreen,
                         fontSize: 20,
@@ -80,7 +79,7 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Bir sonraki adımda tercihlerini belirleyeceğiz.',
+                      'Next, we’ll learn about your preferences.',
                       style: TextStyle(
                         color: Color(0xFF718078),
                         fontSize: 15,

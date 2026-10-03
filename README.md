@@ -1,121 +1,118 @@
-# Mood2Go — Moduna Göre
+# Mood2GO
 
-Mood2Go, kullanıcıların ruh hâline, ilgi alanlarına ve kişisel tercihlerine göre mekan ve aktivite keşfetmesini sağlayan bir Flutter uygulamasıdır. Kullanıcılar bireysel öneriler alabilir veya arkadaşlarıyla grup kurarak herkesin tercihine uygun ortak bir plan oluşturabilir.
+Mood2GO is a Flutter application that helps people discover places and activities based on their mood, interests, and preferences. Users can receive personal recommendations or create a group with friends to find an option that works for everyone.
 
-Bu proje, üç kişilik bir ekip tarafından dönem projesi olarak geliştirilmektedir.
+The application is being developed as a semester project by a three-person team.
 
-## Projenin amacı
+## Project goal
 
-Bir grup arkadaşın “Nereye gidelim?” veya “Ne yapalım?” sorusuna hızlı ve kişiselleştirilmiş bir cevap vermek amaçlanmaktadır. Uygulama, kullanıcılardan topladığı tercihleri değerlendirerek uygun mekanları ve aktiviteleri sıralayacaktır.
+Mood2GO aims to give a quick, personalized answer to the questions “Where should we go?” and “What should we do?”. It collects user preferences and ranks suitable places and activities.
 
-## Planlanan özellikler
+## Planned features
 
-- Kullanıcı kaydı ve giriş sistemi
-- Kullanıcı profili ve tercihleri
-- Ruh hâli ve ilgi alanına göre öneriler
-- Mekan ve aktivite listeleme
-- Mekanların menü, tarihçe ve şef bilgileri
-- Ürünlerin içerik ve alerjen bilgileri
-- Grup oluşturma ve arkadaş davet etme
-- Grup üyelerinin ortak tercihlerine göre öneri üretme
-- Jev ile seçenekleri değerlendirme ve sıralama
-- Yemekler ve mekanlar hakkında soruları yanıtlayan chatbot
-- Uygulama içinden örnek sipariş oluşturma
+- User registration and sign-in
+- User profiles and preferences
+- Recommendations based on mood and interests
+- Place and activity discovery
+- Menus, restaurant history, and chef information
+- Ingredient and allergen information
+- Group creation and friend invitations
+- Group recommendations based on shared preferences
+- Option evaluation and ranking with Jev
+- A chatbot for questions about food and places
+- A sample in-app ordering flow
 
-## Şu anda tamamlananlar
+## Completed features
 
-- Karşılama ekranı
-- Giriş ekranı
-- Kayıt ekranı
-- Form alanı kontrolleri
-- Şifreyi gösterme ve gizleme
-- GoRouter ile sayfalar arası geçiş
-- Beyaz ve pastel yeşil renklerden oluşan temel tasarım
+- Welcome screen
+- Sign-in screen
+- Registration screen
+- Form validation
+- Password visibility controls
+- Navigation with GoRouter
+- Supabase authentication
+- Basic home screen and sign-out
+- White and pastel green visual design
 
-## Kullanılan teknolojiler
+## Technology
 
-| Teknoloji | Kullanım amacı |
+| Technology | Purpose |
 | --- | --- |
-| Flutter | Android, iOS ve web arayüzü |
-| Dart | Uygulama geliştirme dili |
-| GoRouter | Sayfalar arası yönlendirme |
-| Supabase | Planlanan kullanıcı, veritabanı ve dosya işlemleri |
-| Jev | Planlanan kişisel ve grup önerilerinin sıralanması |
+| Flutter | Android, iOS, and web interface |
+| Dart | Application development language |
+| GoRouter | Navigation between screens |
+| Supabase | Authentication, database, and file storage |
+| Jev | Planned personal and group recommendation ranking |
 
-## Projeyi çalıştırma
+## Running the project
 
-### Gereksinimler
+### Requirements
 
 - Flutter SDK
 - Dart SDK
-- Chrome, Android emülatörü veya iOS simülatörü
+- Chrome, an Android emulator, or an iOS simulator
 
-Kurulumun doğru olduğunu kontrol etmek için:
+Check your development environment:
 
 ```bash
 flutter doctor
 ```
 
-### Kurulum
-
-Projeyi klonladıktan sonra proje klasörüne girin:
-
-```bash
-cd mood2go
-```
-
-Paketleri yükleyin:
+Install the project dependencies:
 
 ```bash
 flutter pub get
 ```
 
-Uygulamayı Chrome üzerinde çalıştırın:
+Run the application in Chrome:
 
 ```bash
 flutter run -d chrome
 ```
 
-Bağlı cihazları görüntülemek için:
+List available devices:
 
 ```bash
 flutter devices
 ```
 
-## Klasör yapısı
+## Project structure
 
 ```text
 lib/
 ├── main.dart
-└── pages/
-    ├── login_page.dart
-    └── register_page.dart
+├── pages/
+│   ├── home_page.dart
+│   ├── login_page.dart
+│   └── register_page.dart
+└── widgets/
+    └── mood2go_wordmark.dart
 ```
 
-Proje büyüdükçe sayfalar, ortak bileşenler, modeller ve servisler ayrı klasörlere taşınacaktır.
+As the project grows, screens, shared components, models, and services will be organized into their own folders.
 
-## Geliştirme yol haritası
+## Roadmap
 
-- [x] Flutter projesini oluşturma
-- [x] Karşılama ekranı
-- [x] Giriş ve kayıt arayüzleri
-- [x] Temel form kontrolleri
-- [x] GoRouter kurulumu
-- [ ] Supabase bağlantısı
-- [ ] Gerçek kullanıcı kaydı ve girişi
-- [ ] Kullanıcı tercihleri anketi
-- [ ] Ana sayfa ve keşfet ekranı
-- [ ] Mekan ve aktivite detayları
-- [ ] Grup oluşturma ve davet sistemi
-- [ ] Jev öneri sistemi
-- [ ] Chatbot
-- [ ] Örnek sipariş akışı
-- [ ] Testler ve dönem sonu sunumu
+- [x] Create the Flutter project
+- [x] Build the welcome screen
+- [x] Build the sign-in and registration screens
+- [x] Add form validation
+- [x] Configure GoRouter
+- [x] Connect Supabase authentication
+- [x] Add the first home screen
+- [ ] Build the preference questionnaire
+- [ ] Build discovery and recommendation screens
+- [ ] Add place and activity details
+- [ ] Add group creation and invitations
+- [ ] Integrate Jev recommendations
+- [ ] Add the chatbot
+- [ ] Add the sample ordering flow
+- [ ] Complete testing and the final presentation
 
-## Ekip
+## Team
 
-Proje üç kişilik bir öğrenci ekibi tarafından geliştirilmektedir. Görev dağılımı geliştirme sürecinde arayüz, veri ve öneri sistemi başlıklarına göre yapılacaktır.
+Mood2GO is being developed by a three-person student team. Responsibilities will be divided among interface development, data management, and the recommendation system.
 
-## Proje durumu
+## Status
 
-Proje aktif geliştirme aşamasındadır. İlk kullanıcı arayüzleri tamamlanmış, gerçek üyelik sistemi için Supabase entegrasyonuna başlanmıştır.
+The project is under active development. Authentication and the first user interface flow are complete. Preference collection is the next planned feature.
