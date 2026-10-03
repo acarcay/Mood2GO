@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -20,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool isPasswordHidden = true;
   bool isPasswordAgainHidden = true;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -30,37 +33,86 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  void register() {
-    final name = nameController.text.trim();
-    final email = emailController.text.trim();
-    final password = passwordController.text;
-    final passwordAgain = passwordAgainController.text;
+  Future<void> register() async {
+  final name = nameController.text.trim();
+  final email = emailController.text.trim();
+  final password = passwordController.text;
+  final passwordAgain = passwordAgainController.text;
 
-    if (name.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        passwordAgain.isEmpty) {
-      showMessage('Lütfen bütün alanları doldur.');
-      return;
-    }
-
-    if (!email.contains('@') || !email.contains('.')) {
-      showMessage('Geçerli bir e-posta adresi gir.');
-      return;
-    }
-
-    if (password.length < 6) {
-      showMessage('Şifre en az 6 karakter olmalı.');
-      return;
-    }
-
-    if (password != passwordAgain) {
-      showMessage('Girdiğin şifreler aynı değil.');
-      return;
-    }
-
-    showMessage('Bilgiler doğru. Üyelik sistemi sonraki aşamada bağlanacak.');
+  if (name.isEmpty ||
+      email.isEmpty ||
+      password.isEmpty ||
+      passwordAgain.isEmpty) {
+    showMessage('Lütfen bütün alanları doldur.');
+    return;
   }
+
+  if (!email.contains('@') || !email.contains('.')) {
+    showMessage('Geçerli bir e-posta adresi gir.');
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage('Şifre en az 6 karakter olmalı.');
+    return;
+  }
+
+  if (password != passwordAgain) {
+    showMessage('Girdiğin şifreler aynı değil.');
+    return;
+  }
+
+  setState(() {
+    isLoading = true;
+  });
+
+  try {
+    final response = await Supabase.instance.client.auth.signUp(
+      email: email,
+      password: password,
+      data: {
+        'full_name': name,
+      },
+    );
+
+    if (!mounted) return;
+
+    if (response.user == null) {
+      showMessage('Hesap oluşturulamadı. Tekrar deneyin.');
+      return;
+    }
+
+    // E-posta doğrulaması kapalıysa kayıt işlemi kullanıcıyı
+    // otomatik olarak giriş yapmış hâle getirir.
+    // Giriş ekranını da test edebilmek için oturumu kapatıyoruz.
+    await Supabase.instance.client.auth.signOut();
+
+    if (!mounted) return;
+
+    showMessage('Hesabın oluşturuldu. Şimdi giriş yapabilirsin.');
+
+    context.go('/login');
+  } on AuthException catch (error) {
+    if (!mounted) return;
+
+    if (error.message.toLowerCase().contains('already registered')) {
+      showMessage('Bu e-posta adresi zaten kayıtlı.');
+    } else {
+      showMessage(error.message);
+    }
+  } catch (error) {
+    if (!mounted) return;
+
+    showMessage('Bir hata oluştu. İnternet bağlantını kontrol et.');
+    debugPrint('Kayıt hatası: $error');
+  } finally {
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+}
 
   void showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -197,54 +249,38 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 28),
 
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: FilledButton(
-                  onPressed: register,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: darkGreen,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Hesap oluştur',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 18),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Zaten hesabın var mı?',
-                    style: TextStyle(
-                      color: Color(0xFF718078),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.go('/login');
-                    },
-                    child: const Text(
-                      'Giriş yap',
-                      style: TextStyle(
-                        color: darkGreen,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            SizedBox(
+  width: double.infinity,
+  height: 56,
+  child: FilledButton(
+    onPressed: isLoading ? null : register,
+    style: FilledButton.styleFrom(
+      backgroundColor: darkGreen,
+      foregroundColor: Colors.white,
+      disabledBackgroundColor: darkGreen,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
+    child: isLoading
+        ? const SizedBox(
+            width: 22,
+            height: 22,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: Colors.white,
+            ),
+          )
+        : const Text(
+            'Hesap oluştur',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+  ),
+),
             ],
           ),
         ),
