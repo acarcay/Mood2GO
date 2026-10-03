@@ -4,23 +4,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
+import 'pages/home_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const WelcomePage(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginPage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const WelcomePage()),
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterPage(),
-    )
-
+    ),
+    GoRoute(path: '/home', builder: (context, state) => const HomePage()),
   ],
 );
 
@@ -34,6 +29,7 @@ Future<void> main() async {
 
   runApp(const ModunaGoreApp());
 }
+
 class ModunaGoreApp extends StatelessWidget {
   const ModunaGoreApp({super.key});
 
@@ -108,7 +104,7 @@ class WelcomePage extends StatelessWidget {
                 height: 56,
                 child: FilledButton(
                   onPressed: () {
-                     context.go('/register');
+                    context.go('/register');
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: darkGreen,
@@ -120,10 +116,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   child: const Text(
                     'Başlayalım',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -135,7 +128,7 @@ class WelcomePage extends StatelessWidget {
                 height: 50,
                 child: TextButton(
                   onPressed: () {
-                   context.go('/login');
+                    context.go('/login');
                   },
                   child: const Text(
                     'Hesabım var, giriş yap',
