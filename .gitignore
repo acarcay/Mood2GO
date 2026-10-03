@@ -1,0 +1,70 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.metadata/
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+*.code-workspace
+*.xcuserstate
+
+# Local secrets and machine-specific config
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+*.crt
+**/local.properties
+android/key.properties
+.fvm/
+
+# Build / generated output
+/build/
+/coverage/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+.packages
+**/doc/api/
+**/ios/Flutter/.last_build_id
+**/GeneratedPluginRegistrant.*
+linux/flutter/generated_plugin_registrant.*
+linux/flutter/generated_plugins.cmake
+windows/flutter/generated_plugins.cmake
+macos/Flutter/Generated.xcconfig
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+
+# Logs / temporary files
+*.log
+*.tmp
+*.pid
+*.seed
+*.class
+
+# Android Studio build artifacts
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Ignore unused desktop targets unless you intentionally want to publish them
+windows/
+linux/
+macos/
+
+# Symbolication / obfuscation
+app.*.symbols
+app.*.map.json
+
+# Widget preview
+.widget_preview/
+
+# Keep intentional app assets such as PNG icons and images tracked
+# Do not ignore all image files globally; Flutter app assets are usually committed.
