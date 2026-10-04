@@ -19,6 +19,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Supabase.instance.client.auth.currentUser;
     final name = user?.userMetadata?['full_name'] as String? ?? 'User';
+    final preferences = Map<String, dynamic>.from(
+      user?.userMetadata?['preferences'] as Map? ?? const {},
+    );
+    final mood = preferences['mood'] as String? ?? 'Your mood';
+    final planType = preferences['plan_type'] as String? ?? 'Your plan';
+    final budget = preferences['budget'] as String? ?? 'Your budget';
 
     return Scaffold(
       appBar: AppBar(
@@ -60,30 +66,41 @@ class HomePage extends StatelessWidget {
                   color: lightGreen,
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.auto_awesome_rounded,
                       color: darkGreen,
                       size: 32,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Let’s find recommendations for you.',
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Your preferences are ready.',
                       style: TextStyle(
                         color: darkGreen,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Next, we’ll learn about your preferences.',
-                      style: TextStyle(
-                        color: Color(0xFF718078),
-                        fontSize: 15,
-                        height: 1.4,
+                    const SizedBox(height: 14),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _PreferenceTag(mood),
+                        _PreferenceTag(planType),
+                        _PreferenceTag('$budget budget'),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    OutlinedButton.icon(
+                      onPressed: () => context.go('/preferences?edit=true'),
+                      icon: const Icon(Icons.tune_rounded),
+                      label: const Text('Edit preferences'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: darkGreen,
+                        side: const BorderSide(color: darkGreen),
                       ),
                     ),
                   ],
@@ -91,6 +108,30 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PreferenceTag extends StatelessWidget {
+  const _PreferenceTag(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: HomePage.darkGreen,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

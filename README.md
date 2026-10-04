@@ -32,6 +32,8 @@ Mood2GO aims to give a quick, personalized answer to the questions “Where shou
 - Navigation with GoRouter
 - Supabase authentication
 - Basic home screen and sign-out
+- Persistent sessions and protected routes
+- Preference questionnaire stored in Supabase user metadata
 - White and pastel green visual design
 
 ## Technology
@@ -84,7 +86,13 @@ lib/
 ├── pages/
 │   ├── home_page.dart
 │   ├── login_page.dart
+│   ├── preferences_page.dart
 │   └── register_page.dart
+├── models/
+│   └── user_preferences.dart
+├── services/
+│   ├── auth_notifier.dart
+│   └── preferences_service.dart
 └── widgets/
     └── mood2go_wordmark.dart
 ```
@@ -100,7 +108,7 @@ As the project grows, screens, shared components, models, and services will be o
 - [x] Configure GoRouter
 - [x] Connect Supabase authentication
 - [x] Add the first home screen
-- [ ] Build the preference questionnaire
+- [x] Build the preference questionnaire
 - [ ] Build discovery and recommendation screens
 - [ ] Add place and activity details
 - [ ] Add group creation and invitations

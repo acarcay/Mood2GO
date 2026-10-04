@@ -5,20 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 import 'pages/home_page.dart';
+import 'pages/preferences_page.dart';
+import 'services/auth_notifier.dart';
 import 'widgets/mood2go_wordmark.dart';
 
-final GoRouter router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(path: '/', builder: (context, state) => const WelcomePage()),
-    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
-    GoRoute(
-      path: '/register',
-      builder: (context, state) => const RegisterPage(),
-    ),
-    GoRoute(path: '/home', builder: (context, state) => const HomePage()),
-  ],
-);
+late final GoRouter router;
+late final AuthNotifier authNotifier;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +18,51 @@ Future<void> main() async {
   await Supabase.initialize(
     url: 'https://ntwnrorwpgsocgqwtklu.supabase.co',
     publishableKey: 'sb_publishable_QJTC6mOWiZF-L_pfi88VTw_KqIH4Uhy',
+  );
+
+  authNotifier = AuthNotifier(Supabase.instance.client);
+  router = GoRouter(
+    initialLocation: '/',
+    refreshListenable: authNotifier,
+    redirect: (context, state) {
+      final user = Supabase.instance.client.auth.currentUser;
+      final location = state.uri.path;
+      final isPublic = ['/', '/login', '/register'].contains(location);
+
+      if (user == null) {
+        return isPublic ? null : '/';
+      }
+
+      final preferencesCompleted =
+          user.userMetadata?['preferences_completed'] == true;
+      final editingPreferences = state.uri.queryParameters['edit'] == 'true';
+
+      if (!preferencesCompleted && location != '/preferences') {
+        return '/preferences';
+      }
+      if (preferencesCompleted && isPublic) {
+        return '/home';
+      }
+      if (preferencesCompleted &&
+          location == '/preferences' &&
+          !editingPreferences) {
+        return '/home';
+      }
+      return null;
+    },
+    routes: [
+      GoRoute(path: '/', builder: (context, state) => const WelcomePage()),
+      GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/preferences',
+        builder: (context, state) => const PreferencesPage(),
+      ),
+      GoRoute(path: '/home', builder: (context, state) => const HomePage()),
+    ],
   );
 
   runApp(const Mood2GoApp());
