@@ -8,6 +8,7 @@ import 'pages/home_page.dart';
 import 'pages/preferences_page.dart';
 import 'services/auth_notifier.dart';
 import 'widgets/mood2go_wordmark.dart';
+import 'pages/group_plan_page.dart';
 
 late final GoRouter router;
 late final AuthNotifier authNotifier;
@@ -62,6 +63,10 @@ Future<void> main() async {
         builder: (context, state) => const PreferencesPage(),
       ),
       GoRoute(path: '/home', builder: (context, state) => const HomePage()),
+      GoRoute(
+        path: '/group-plan',
+        builder: (context, state) => const GroupPlanPage(),
+      ),
     ],
   );
 

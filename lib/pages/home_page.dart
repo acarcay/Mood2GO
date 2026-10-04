@@ -106,6 +106,32 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 24),
+
+              // Yeni Grup Planı Butonu
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    context.push('/group-plan');
+                  },
+                  icon: const Icon(Icons.add_circle_outline),
+                  label: const Text(
+                      'Create New Group Plan',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkGreen,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
