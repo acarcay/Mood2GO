@@ -34,6 +34,7 @@ Mood2GO aims to give a quick, personalized answer to the questions “Where shou
 - Basic home screen and sign-out
 - Persistent sessions and protected routes
 - Preference questionnaire stored in Supabase user metadata
+- Server-side Google Places discovery agent
 - White and pastel green visual design
 
 ## Technology
@@ -44,6 +45,7 @@ Mood2GO aims to give a quick, personalized answer to the questions “Where shou
 | Dart | Application development language |
 | GoRouter | Navigation between screens |
 | Supabase | Authentication, database, and file storage |
+| Google Places API | Live place and activity discovery |
 | Jev | Planned personal and group recommendation ranking |
 
 ## Running the project
@@ -89,12 +91,18 @@ lib/
 │   ├── preferences_page.dart
 │   └── register_page.dart
 ├── models/
+│   ├── discovered_place.dart
 │   └── user_preferences.dart
 ├── services/
 │   ├── auth_notifier.dart
+│   ├── place_discovery_service.dart
 │   └── preferences_service.dart
 └── widgets/
-    └── mood2go_wordmark.dart
+    ├── mood2go_wordmark.dart
+    └── mood_surface.dart
+supabase/functions/
+└── discover-places/
+    └── index.ts
 ```
 
 As the project grows, screens, shared components, models, and services will be organized into their own folders.
@@ -109,6 +117,7 @@ As the project grows, screens, shared components, models, and services will be o
 - [x] Connect Supabase authentication
 - [x] Add the first home screen
 - [x] Build the preference questionnaire
+- [x] Build the server-side place discovery agent
 - [ ] Build discovery and recommendation screens
 - [ ] Add place and activity details
 - [ ] Add group creation and invitations
@@ -123,4 +132,6 @@ Mood2GO is being developed by a three-person student team. Responsibilities will
 
 ## Status
 
-The project is under active development. Authentication and the first user interface flow are complete. Preference collection is the next planned feature.
+The project is under active development. Authentication, preference collection,
+and the server-side place discovery foundation are complete. The discovery screen
+and curated Mood2GO venue data are the next planned features.

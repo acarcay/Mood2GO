@@ -1,3 +1,5 @@
+import '../widgets/mood_surface.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -103,174 +105,182 @@ class _PreferencesPageState extends State<PreferencesPage> {
             ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                editing ? 'Update your preferences' : 'Let’s get to know you',
-                style: const TextStyle(
-                  color: darkGreen,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.8,
+      body: MoodSurface(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const MoodAccent(
+                  icon: Icons.tune_rounded,
+                  label: 'MAKE IT YOURS',
                 ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Your answers help Mood2GO find better places and activities for you.',
-                style: TextStyle(
-                  color: Color(0xFF718078),
-                  fontSize: 15,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox(height: 30),
-              _ChoiceSection(
-                title: 'How are you feeling?',
-                options: const ['Relaxed', 'Energetic', 'Social', 'Curious'],
-                selected: mood,
-                onSelected: (value) => setState(() => mood = value),
-              ),
-              _ChoiceSection(
-                title: 'What are you looking for?',
-                options: const ['Food', 'Activity', 'Both'],
-                selected: planType,
-                onSelected: (value) => setState(() => planType = value),
-              ),
-              _ChoiceSection(
-                title: 'Indoor or outdoor?',
-                options: const ['Indoor', 'Outdoor', 'No preference'],
-                selected: venueType,
-                onSelected: (value) => setState(() => venueType = value),
-              ),
-              _ChoiceSection(
-                title: 'What is your budget?',
-                options: const ['Low', 'Medium', 'High'],
-                selected: budget,
-                onSelected: (value) => setState(() => budget = value),
-              ),
-              _ChoiceSection(
-                title: 'How much time do you have?',
-                options: const [
-                  'Under 1 hour',
-                  '1–2 hours',
-                  '2–3 hours',
-                  'All day',
-                ],
-                selected: duration,
-                onSelected: (value) => setState(() => duration = value),
-              ),
-              _SectionCard(
-                title: 'How many people?',
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Group size',
-                          style: TextStyle(color: Color(0xFF718078)),
-                        ),
-                        Text(
-                          groupSize.round().toString(),
-                          style: const TextStyle(
-                            color: darkGreen,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Slider(
-                      value: groupSize,
-                      min: 1,
-                      max: 10,
-                      divisions: 9,
-                      activeColor: darkGreen,
-                      onChanged: (value) => setState(() => groupSize = value),
-                    ),
-                  ],
-                ),
-              ),
-              _MultiChoiceSection(
-                title: 'Which cuisines do you enjoy?',
-                options: const [
-                  'Turkish',
-                  'Italian',
-                  'Asian',
-                  'Mexican',
-                  'Mediterranean',
-                  'Desserts',
-                ],
-                selected: cuisines,
-                onChanged: (value, selected) {
-                  setState(() {
-                    selected ? cuisines.add(value) : cuisines.remove(value);
-                  });
-                },
-              ),
-              _MultiChoiceSection(
-                title: 'Any dietary needs?',
-                options: const [
-                  'None',
-                  'Vegetarian',
-                  'Vegan',
-                  'Gluten-free',
-                  'Halal',
-                ],
-                selected: dietaryNeeds,
-                onChanged: (value, selected) {
-                  setState(() {
-                    if (value == 'None' && selected) {
-                      dietaryNeeds
-                        ..clear()
-                        ..add('None');
-                    } else {
-                      dietaryNeeds.remove('None');
-                      selected
-                          ? dietaryNeeds.add(value)
-                          : dietaryNeeds.remove(value);
-                      if (dietaryNeeds.isEmpty) dietaryNeeds.add('None');
-                    }
-                  });
-                },
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: FilledButton(
-                  onPressed: isSaving ? null : savePreferences,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: darkGreen,
-                    disabledBackgroundColor: darkGreen,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                Text(
+                  editing ? 'Update your preferences' : 'Let’s get to know you',
+                  style: const TextStyle(
+                    color: darkGreen,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.8,
                   ),
-                  child: isSaving
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2.5,
-                          ),
-                        )
-                      : Text(
-                          editing ? 'Save changes' : 'Show my recommendations',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                const Text(
+                  'Your answers help Mood2GO find better places and activities for you.',
+                  style: TextStyle(
+                    color: Color(0xFF718078),
+                    fontSize: 15,
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                _ChoiceSection(
+                  title: 'How are you feeling?',
+                  options: const ['Relaxed', 'Energetic', 'Social', 'Curious'],
+                  selected: mood,
+                  onSelected: (value) => setState(() => mood = value),
+                ),
+                _ChoiceSection(
+                  title: 'What are you looking for?',
+                  options: const ['Food', 'Activity', 'Both'],
+                  selected: planType,
+                  onSelected: (value) => setState(() => planType = value),
+                ),
+                _ChoiceSection(
+                  title: 'Indoor or outdoor?',
+                  options: const ['Indoor', 'Outdoor', 'No preference'],
+                  selected: venueType,
+                  onSelected: (value) => setState(() => venueType = value),
+                ),
+                _ChoiceSection(
+                  title: 'What is your budget?',
+                  options: const ['Low', 'Medium', 'High'],
+                  selected: budget,
+                  onSelected: (value) => setState(() => budget = value),
+                ),
+                _ChoiceSection(
+                  title: 'How much time do you have?',
+                  options: const [
+                    'Under 1 hour',
+                    '1–2 hours',
+                    '2–3 hours',
+                    'All day',
+                  ],
+                  selected: duration,
+                  onSelected: (value) => setState(() => duration = value),
+                ),
+                _SectionCard(
+                  title: 'How many people?',
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Group size',
+                            style: TextStyle(color: Color(0xFF718078)),
+                          ),
+                          Text(
+                            groupSize.round().toString(),
+                            style: const TextStyle(
+                              color: darkGreen,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Slider(
+                        value: groupSize,
+                        min: 1,
+                        max: 10,
+                        divisions: 9,
+                        activeColor: darkGreen,
+                        onChanged: (value) => setState(() => groupSize = value),
+                      ),
+                    ],
+                  ),
+                ),
+                _MultiChoiceSection(
+                  title: 'Which cuisines do you enjoy?',
+                  options: const [
+                    'Turkish',
+                    'Italian',
+                    'Asian',
+                    'Mexican',
+                    'Mediterranean',
+                    'Desserts',
+                  ],
+                  selected: cuisines,
+                  onChanged: (value, selected) {
+                    setState(() {
+                      selected ? cuisines.add(value) : cuisines.remove(value);
+                    });
+                  },
+                ),
+                _MultiChoiceSection(
+                  title: 'Any dietary needs?',
+                  options: const [
+                    'None',
+                    'Vegetarian',
+                    'Vegan',
+                    'Gluten-free',
+                    'Halal',
+                  ],
+                  selected: dietaryNeeds,
+                  onChanged: (value, selected) {
+                    setState(() {
+                      if (value == 'None' && selected) {
+                        dietaryNeeds
+                          ..clear()
+                          ..add('None');
+                      } else {
+                        dietaryNeeds.remove('None');
+                        selected
+                            ? dietaryNeeds.add(value)
+                            : dietaryNeeds.remove(value);
+                        if (dietaryNeeds.isEmpty) dietaryNeeds.add('None');
+                      }
+                    });
+                  },
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: FilledButton(
+                    onPressed: isSaving ? null : savePreferences,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: darkGreen,
+                      disabledBackgroundColor: darkGreen,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: isSaving
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.5,
+                            ),
+                          )
+                        : Text(
+                            editing
+                                ? 'Save changes'
+                                : 'Show my recommendations',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -363,7 +373,14 @@ class _SectionCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x08244638),
+            blurRadius: 20,
+            offset: Offset(0, 6),
+          ),
+        ],
         border: Border.all(color: const Color(0xFFE1E9E3)),
       ),
       child: Column(

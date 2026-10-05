@@ -1,3 +1,5 @@
+import '../widgets/mood_surface.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -69,137 +71,144 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
-                onPressed: () => context.go('/'),
-                style: IconButton.styleFrom(
-                  backgroundColor: lightGreen,
-                  foregroundColor: darkGreen,
+      body: MoodSurface(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () => context.go('/'),
+                  style: IconButton.styleFrom(
+                    backgroundColor: lightGreen,
+                    foregroundColor: darkGreen,
+                  ),
+                  icon: const Icon(Icons.arrow_back_rounded),
                 ),
-                icon: const Icon(Icons.arrow_back_rounded),
-              ),
-              const SizedBox(height: 48),
-              const Text(
-                'Welcome back',
-                style: TextStyle(
-                  color: darkGreen,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.8,
+                const SizedBox(height: 28),
+                const MoodAccent(
+                  icon: Icons.waving_hand_outlined,
+                  label: 'YOUR NEXT GOOD DAY',
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Sign in to continue where you left off.',
-                style: TextStyle(
-                  color: Color(0xFF718078),
-                  fontSize: 16,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox(height: 36),
-              const _FieldLabel('Email'),
-              TextField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                decoration: _inputDecoration(
-                  hintText: 'ornek@email.com',
-                  icon: Icons.mail_outline_rounded,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const _FieldLabel('Password'),
-              TextField(
-                controller: passwordController,
-                obscureText: isPasswordHidden,
-                onSubmitted: (_) => login(),
-                decoration: _inputDecoration(
-                  hintText: 'Enter your password',
-                  icon: Icons.lock_outline_rounded,
-                  suffixIcon: IconButton(
-                    onPressed: () =>
-                        setState(() => isPasswordHidden = !isPasswordHidden),
-                    icon: Icon(
-                      isPasswordHidden
-                          ? Icons.visibility_outlined
-                          : Icons.visibility_off_outlined,
-                    ),
+                const Text(
+                  'Welcome back',
+                  style: TextStyle(
+                    color: darkGreen,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.8,
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () =>
-                      showMessage('Password reset will be available soon.'),
-                  child: const Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      color: darkGreen,
-                      fontWeight: FontWeight.w600,
-                    ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Sign in to continue where you left off.',
+                  style: TextStyle(
+                    color: Color(0xFF718078),
+                    fontSize: 16,
+                    height: 1.5,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: FilledButton(
-                  onPressed: isLoading ? null : login,
-                  style: FilledButton.styleFrom(
-                    backgroundColor: darkGreen,
-                    disabledBackgroundColor: darkGreen,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                const SizedBox(height: 36),
+                const _FieldLabel('Email'),
+                TextField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  decoration: _inputDecoration(
+                    hintText: 'you@example.com',
+                    icon: Icons.mail_outline_rounded,
                   ),
-                  child: isLoading
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.5,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Text(
-                          'Sign in',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Don’t have an account?',
-                    style: TextStyle(color: Color(0xFF718078)),
-                  ),
-                  TextButton(
-                    onPressed: () => context.go('/register'),
-                    child: const Text(
-                      'Sign up',
-                      style: TextStyle(
-                        color: darkGreen,
-                        fontWeight: FontWeight.w700,
+                const SizedBox(height: 20),
+                const _FieldLabel('Password'),
+                TextField(
+                  controller: passwordController,
+                  obscureText: isPasswordHidden,
+                  onSubmitted: (_) => login(),
+                  decoration: _inputDecoration(
+                    hintText: 'Enter your password',
+                    icon: Icons.lock_outline_rounded,
+                    suffixIcon: IconButton(
+                      onPressed: () =>
+                          setState(() => isPasswordHidden = !isPasswordHidden),
+                      icon: Icon(
+                        isPasswordHidden
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () =>
+                        showMessage('Password reset will be available soon.'),
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        color: darkGreen,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: FilledButton(
+                    onPressed: isLoading ? null : login,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: darkGreen,
+                      disabledBackgroundColor: darkGreen,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: isLoading
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text(
+                            'Sign in',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    const Text(
+                      'Don’t have an account?',
+                      style: TextStyle(color: Color(0xFF718078)),
+                    ),
+                    TextButton(
+                      onPressed: () => context.go('/register'),
+                      child: const Text(
+                        'Sign up',
+                        style: TextStyle(
+                          color: darkGreen,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

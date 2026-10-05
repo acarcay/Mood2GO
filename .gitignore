@@ -13,6 +13,7 @@ Thumbs.db
 *.xcuserstate
 
 # Local secrets and machine-specific config
+supabase/functions/.env
 *.jks
 *.keystore
 *.p12
