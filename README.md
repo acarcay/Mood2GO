@@ -118,10 +118,13 @@ As the project grows, screens, shared components, models, and services will be o
 - [x] Add the first home screen
 - [x] Build the preference questionnaire
 - [x] Build the server-side place discovery agent
-- [ ] Build discovery and recommendation screens
-- [ ] Add place and activity details
+- [x] Build live place discovery screen with filters and pagination
+- [x] Add local preference-based recommendation ranking with reasons
+- [x] Add basic place details and Google Maps link copying
+- [ ] Add curated menus and activity details
 - [ ] Add group creation and invitations
-- [ ] Integrate Jev recommendations
+- [x] Implement the Jev API adapter and batched scoring
+- [ ] Configure TypeSafe access and validate real Jev rankings
 - [ ] Add the chatbot
 - [ ] Add the sample ordering flow
 - [ ] Complete testing and the final presentation
@@ -132,6 +135,19 @@ Mood2GO is being developed by a three-person student team. Responsibilities will
 
 ## Status
 
-The project is under active development. Authentication, preference collection,
-and the server-side place discovery foundation are complete. The discovery screen
-and curated Mood2GO venue data are the next planned features.
+Discovery now calls a server-side live Google Places search, limited to ten
+candidates per search with no pagination. The server-side Jev adapter is ready
+for TypeSafe's decision model, with batched preference scoring and visible
+ranking status. Live deployment and verified account allowances are still needed.
+No real Google or Jev calls were made during implementation.
+
+## Setup and spending limits
+
+Follow [the live discovery guide](docs/place-discovery-agent.md). Approved monthly
+allowances live in Supabase with atomic reservations. Missing setup or allowance
+blocks live requests. Jev remains disabled until a separate TypeSafe account,
+free credits and a provider-side spending boundary are confirmed.
+
+The older local recommendation screen and fictional catalog remain as development
+fixtures; the app's recommendation route now opens live discovery. They are not
+presented as real Google venues or as Jev-generated results.

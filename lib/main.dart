@@ -9,6 +9,7 @@ import 'pages/preferences_page.dart';
 import 'services/auth_notifier.dart';
 import 'widgets/mood2go_wordmark.dart';
 import 'pages/group_plan_page.dart';
+import 'pages/discovery_page.dart';
 
 late final GoRouter router;
 late final AuthNotifier authNotifier;
@@ -62,6 +63,14 @@ Future<void> main() async {
         path: '/preferences',
         builder: (context, state) => const PreferencesPage(),
       ),
+      GoRoute(
+        path: '/discover',
+        builder: (context, state) => const DiscoveryPage(),
+      ),
+      GoRoute(
+        path: '/recommendations',
+        builder: (context, state) => const DiscoveryPage(),
+      ),
       GoRoute(path: '/home', builder: (context, state) => const HomePage()),
       GoRoute(
         path: '/group-plan',
@@ -105,14 +114,14 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _AppLogo(),
 
-              const Spacer(),
+              const SizedBox(height: 32),
 
               const _WelcomeVisual(),
 
@@ -140,7 +149,7 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
 
-              const Spacer(),
+              const SizedBox(height: 32),
 
               SizedBox(
                 width: double.infinity,

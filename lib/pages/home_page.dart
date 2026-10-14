@@ -42,97 +42,121 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hello, $name',
-                style: const TextStyle(
-                  color: darkGreen,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hello, $name',
+                  style: const TextStyle(
+                    color: darkGreen,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                user?.email ?? '',
-                style: const TextStyle(color: Color(0xFF718078), fontSize: 15),
-              ),
-              const SizedBox(height: 32),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: lightGreen,
-                  borderRadius: BorderRadius.circular(24),
+                const SizedBox(height: 8),
+                Text(
+                  user?.email ?? '',
+                  style: const TextStyle(
+                    color: Color(0xFF718078),
+                    fontSize: 15,
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.auto_awesome_rounded,
-                      color: darkGreen,
-                      size: 32,
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Your preferences are ready.',
-                      style: TextStyle(
+                const SizedBox(height: 32),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: lightGreen,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.auto_awesome_rounded,
                         color: darkGreen,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
+                        size: 32,
                       ),
-                    ),
-                    const SizedBox(height: 14),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        _PreferenceTag(mood),
-                        _PreferenceTag(planType),
-                        _PreferenceTag('$budget budget'),
-                      ],
-                    ),
-                    const SizedBox(height: 18),
-                    OutlinedButton.icon(
-                      onPressed: () => context.go('/preferences?edit=true'),
-                      icon: const Icon(Icons.tune_rounded),
-                      label: const Text('Edit preferences'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: darkGreen,
-                        side: const BorderSide(color: darkGreen),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Your preferences are ready.',
+                        style: TextStyle(
+                          color: darkGreen,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 14),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          _PreferenceTag(mood),
+                          _PreferenceTag(planType),
+                          _PreferenceTag('$budget budget'),
+                        ],
+                      ),
+                      const SizedBox(height: 18),
+                      OutlinedButton.icon(
+                        onPressed: () => context.go('/preferences?edit=true'),
+                        icon: const Icon(Icons.tune_rounded),
+                        label: const Text('Edit preferences'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: darkGreen,
+                          side: const BorderSide(color: darkGreen),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () => context.push('/recommendations'),
+                    icon: const Icon(Icons.auto_awesome),
+                    label: const Text('Show my recommendations'),
+                  ),
+                ),
+                const SizedBox(height: 12),
 
-              // Yeni Grup Planı Butonu
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.push('/group-plan');
-                  },
-                  icon: const Icon(Icons.add_circle_outline),
-                  label: const Text(
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () => context.push('/discover'),
+                    icon: const Icon(Icons.explore_outlined),
+                    label: const Text('Discover places'),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      context.push('/group-plan');
+                    },
+                    icon: const Icon(Icons.add_circle_outline),
+                    label: const Text(
                       'Create New Group Plan',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkGreen,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: darkGreen,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                   ),
                 ),
-              ),
-
-            ],
+              ],
+            ),
           ),
         ),
       ),
