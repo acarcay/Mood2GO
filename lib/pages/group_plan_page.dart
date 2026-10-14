@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,7 +11,6 @@ class GroupPlanPage extends StatefulWidget {
 }
 
 class _GroupPlanPageState extends State<GroupPlanPage> {
-
   static const darkGreen = Color(0xFF244638);
   static const lightGreen = Color(0xFFE4F2E8);
 
@@ -22,8 +22,19 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
   String _selectedCity = 'İzmir';
   String _selectedDuration = '2-3 Hours';
 
-  final List<String> _cities = ['İzmir', 'İstanbul', 'Ankara', 'Bursa', 'Antalya'];
-  final List<String> _durations = ['1-2 Hours', '2-3 Hours', 'Half Day', 'Full Day'];
+  final List<String> _cities = [
+    'İzmir',
+    'İstanbul',
+    'Ankara',
+    'Bursa',
+    'Antalya',
+  ];
+  final List<String> _durations = [
+    '1-2 Hours',
+    '2-3 Hours',
+    'Half Day',
+    'Full Day',
+  ];
 
   bool _isLoading = false;
 
@@ -76,11 +87,15 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
   String _generateGroupCode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final rnd = Random();
-    return String.fromCharCodes(Iterable.generate(6, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
+    return String.fromCharCodes(
+      Iterable.generate(6, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))),
+    );
   }
 
   Future<void> _createGroup() async {
-    if (_groupNameController.text.isEmpty || _selectedDate == null || _selectedTime == null) {
+    if (_groupNameController.text.isEmpty ||
+        _selectedDate == null ||
+        _selectedTime == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please complete the group name, date, and time!'),
@@ -101,7 +116,8 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
         'name': _groupNameController.text,
         'city': _selectedCity,
         'event_date': _selectedDate!.toIso8601String(),
-        'event_time': '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}',
+        'event_time':
+            '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}',
         'duration': _selectedDuration,
         'invite_code': groupCode,
       });
@@ -174,10 +190,18 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: darkGreen,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 12,
+                ),
               ),
-              child: const Text('Go to Group', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text(
+                'Go to Group',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
@@ -190,7 +214,10 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('New Group Plan', style: TextStyle(fontWeight: FontWeight.w700)),
+        title: const Text(
+          'New Group Plan',
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
         backgroundColor: Colors.transparent,
         foregroundColor: darkGreen,
         elevation: 0,
@@ -204,7 +231,11 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
             children: [
               const Text(
                 'Plan with friends!',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: darkGreen),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                  color: darkGreen,
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -213,14 +244,15 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
               ),
               const SizedBox(height: 32),
 
-
               TextField(
                 controller: _groupNameController,
                 cursorColor: darkGreen,
                 decoration: InputDecoration(
                   labelText: 'Group Name (e.g., Friday Coffee)',
                   labelStyle: const TextStyle(color: darkGreen),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: const BorderSide(color: darkGreen, width: 2),
@@ -230,20 +262,26 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
               ),
               const SizedBox(height: 20),
 
-
               DropdownButtonFormField<String>(
-                value: _selectedCity,
+                initialValue: _selectedCity,
                 decoration: InputDecoration(
                   labelText: 'City',
                   labelStyle: const TextStyle(color: darkGreen),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: const BorderSide(color: darkGreen, width: 2),
                   ),
                   prefixIcon: const Icon(Icons.location_city, color: darkGreen),
                 ),
-                items: _cities.map((city) => DropdownMenuItem(value: city, child: Text(city))).toList(),
+                items: _cities
+                    .map(
+                      (city) =>
+                          DropdownMenuItem(value: city, child: Text(city)),
+                    )
+                    .toList(),
                 onChanged: (value) => setState(() => _selectedCity = value!),
               ),
               const SizedBox(height: 20),
@@ -257,8 +295,8 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(16)
+                          border: Border.all(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -266,9 +304,13 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
                             const Icon(Icons.calendar_month, color: darkGreen),
                             const SizedBox(width: 8),
                             Text(
-                              _selectedDate == null ? 'Date' : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
+                              _selectedDate == null
+                                  ? 'Date'
+                                  : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
                               style: TextStyle(
-                                color: _selectedDate == null ? const Color(0xFF718078) : darkGreen,
+                                color: _selectedDate == null
+                                    ? const Color(0xFF718078)
+                                    : darkGreen,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -285,8 +327,8 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(16)
+                          border: Border.all(color: Colors.grey.shade400),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -294,9 +336,13 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
                             const Icon(Icons.access_time, color: darkGreen),
                             const SizedBox(width: 8),
                             Text(
-                              _selectedTime == null ? 'Time' : '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}',
+                              _selectedTime == null
+                                  ? 'Time'
+                                  : '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}',
                               style: TextStyle(
-                                color: _selectedTime == null ? const Color(0xFF718078) : darkGreen,
+                                color: _selectedTime == null
+                                    ? const Color(0xFF718078)
+                                    : darkGreen,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -310,19 +356,29 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
               const SizedBox(height: 20),
 
               DropdownButtonFormField<String>(
-                value: _selectedDuration,
+                initialValue: _selectedDuration,
                 decoration: InputDecoration(
                   labelText: 'Duration',
                   labelStyle: const TextStyle(color: darkGreen),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: const BorderSide(color: darkGreen, width: 2),
                   ),
                   prefixIcon: const Icon(Icons.timer, color: darkGreen),
                 ),
-                items: _durations.map((duration) => DropdownMenuItem(value: duration, child: Text(duration))).toList(),
-                onChanged: (value) => setState(() => _selectedDuration = value!),
+                items: _durations
+                    .map(
+                      (duration) => DropdownMenuItem(
+                        value: duration,
+                        child: Text(duration),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) =>
+                    setState(() => _selectedDuration = value!),
               ),
               const SizedBox(height: 40),
 
@@ -337,19 +393,27 @@ class _GroupPlanPageState extends State<GroupPlanPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: darkGreen,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     elevation: 0,
                   ),
                   label: _isLoading
                       ? const SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-                  )
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
                       : const Text(
-                      'Create Group & Get Invite Code',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                  ),
+                          'Create Group & Get Invite Code',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ],
