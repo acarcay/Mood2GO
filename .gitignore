@@ -69,3 +69,9 @@ app.*.map.json
 
 # Keep intentional app assets such as PNG icons and images tracked
 # Do not ignore all image files globally; Flutter app assets are usually committed.
+
+# Supabase CLI cache and local environment secrets
+supabase/.temp/
+**/.env
+**/.env.*
+!**/.env.example
