@@ -1,0 +1,4 @@
+project_id = "mood2go"
+
+[functions.discover-places]
+verify_jwt = true
